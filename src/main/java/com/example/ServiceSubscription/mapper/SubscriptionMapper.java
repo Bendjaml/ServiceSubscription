@@ -2,22 +2,21 @@ package com.example.ServiceSubscription.mapper;
 
 import com.example.ServiceSubscription.dto.SubscriptionRequestDto;
 import com.example.ServiceSubscription.dto.SubscriptionResponseDto;
-import com.example.ServiceSubscription.dto.TopSubscriptionResponseDto;
 import com.example.ServiceSubscription.model.Subscription;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper
+@Mapper(componentModel = "spring",
+        uses = {},
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface SubscriptionMapper {
-    SubscriptionMapper INSTANCE = Mappers.getMapper(SubscriptionMapper.class);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", ignore = true)
     Subscription toEntity(SubscriptionRequestDto subscriptionRequestDto);
 
     @Mapping(target = "userId", source = "user.id")
     SubscriptionResponseDto toResponseDto(Subscription subscription);
 
-    @Mapping(target = "serviceName", source = "serviceName")
-    @Mapping(target = "subscribersCount", source = "count")
-    TopSubscriptionResponseDto toTopResponseDto(String serviceName, Long count);
 }

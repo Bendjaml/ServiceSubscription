@@ -1,9 +1,4 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/subscription_db
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
@@ -12,7 +7,13 @@ spring:
       hibernate:
         format_sql: true
 
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
 logging:
   level:
+    root: INFO
     org.springframework: INFO
-    com.example.subscriptionservice: DEBUG
+    com.example.ServiceSubscription: DEBUG

@@ -1,8 +1,20 @@
-FROM eclipse-temurin:17-jdk-jammy
+# Build stage
+FROM eclipse-temurin:17-jdk-jammy as builder
+WORKDIR /workspace/app
+
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+COPY src src
+
+RUN ./mvnw clean package -DskipTests
+
+# Runtime stage
+FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN ./mvnw dependency:go-offline
-COPY src ./src
-RUN ./mvnw package -DskipTests
-ENTRYPOINT ["java", "-jar", "/app/target/subscription-service-0.0.1-SNAPSHOT.jar"]
+
+COPY --from=builder /workspace/app/target/ServiceSubscription-*.jar app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]

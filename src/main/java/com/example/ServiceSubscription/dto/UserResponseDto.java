@@ -5,15 +5,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserResponseDto {
-        private Long id;
-        private String name;
-        private String email;
-        private List<SubscriptionResponseDto> subscriptions;
+    private Long id;
+    private String name;
+    private String email;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    @Builder.Default
+    private Set<SubscriptionResponseDto> subscriptions = new HashSet<>();
 }

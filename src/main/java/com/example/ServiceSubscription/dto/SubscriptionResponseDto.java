@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -12,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class SubscriptionResponseDto {
     private Long id;
     private String serviceName;
-    private Double monthlyFee;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private Long userId;
 }
